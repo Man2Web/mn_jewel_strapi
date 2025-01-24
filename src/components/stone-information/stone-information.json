@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_stone_information_stone_informations",
+  "info": {
+    "displayName": "Stone-Information",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "stone_name": {
+      "type": "string",
+      "required": true
+    },
+    "stone_weight": {
+      "type": "decimal",
+      "required": true
+    },
+    "stone_price": {
+      "type": "decimal",
+      "required": true
+    }
+  }
+}

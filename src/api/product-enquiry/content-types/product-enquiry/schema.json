@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "product_enquiries",
+  "info": {
+    "singularName": "product-enquiry",
+    "pluralName": "product-enquiries",
+    "displayName": "Product Enquiry",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "additional_message": {
+      "type": "text"
+    },
+    "product": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::product.product"
+    },
+    "phone_number": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

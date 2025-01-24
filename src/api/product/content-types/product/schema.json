@@ -1,0 +1,140 @@
+{
+  "kind": "collectionType",
+  "collectionName": "products",
+  "info": {
+    "singularName": "product",
+    "pluralName": "products",
+    "displayName": "Product",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "product_Name": {
+      "type": "string",
+      "required": true
+    },
+    "sku_Id": {
+      "type": "uid",
+      "required": true,
+      "targetField": "product_Name"
+    },
+    "material_type": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::material-type.material-type",
+      "inversedBy": "products"
+    },
+    "metal_Color": {
+      "type": "enumeration",
+      "enum": [
+        "Yellow",
+        "White",
+        "Rose"
+      ],
+      "required": true
+    },
+    "item_Gross_Weight": {
+      "type": "decimal",
+      "required": true
+    },
+    "item_Net_Weight": {
+      "type": "decimal",
+      "required": true
+    },
+    "metal_Certification": {
+      "type": "enumeration",
+      "enum": [
+        "BIS Hallmark",
+        "SGL"
+      ],
+      "required": true
+    },
+    "product_Description": {
+      "type": "text",
+      "required": true
+    },
+    "value_Addition": {
+      "type": "decimal",
+      "required": true
+    },
+    "other_Stone_Price": {
+      "type": "decimal",
+      "required": false
+    },
+    "gst": {
+      "type": "integer",
+      "max": 3,
+      "min": 3,
+      "default": 3,
+      "required": true
+    },
+    "product_Images": {
+      "type": "media",
+      "multiple": true,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "stock_Quantity": {
+      "type": "integer",
+      "required": true
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::category.category",
+      "inversedBy": "products"
+    },
+    "product_Status": {
+      "type": "boolean",
+      "required": true
+    },
+    "tag": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::tag.tag",
+      "inversedBy": "products"
+    },
+    "bestSeller": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "basic_Information": {
+      "type": "component",
+      "repeatable": false,
+      "component": "basic-information.basic-information",
+      "required": true
+    },
+    "stone_information": {
+      "type": "component",
+      "repeatable": true,
+      "component": "stone-information.stone-information",
+      "required": true,
+      "min": 1
+    },
+    "material": {
+      "type": "enumeration",
+      "enum": [
+        "Gold",
+        "Silver",
+        "Brace"
+      ],
+      "required": true
+    },
+    "gender": {
+      "type": "enumeration",
+      "enum": [
+        "Men",
+        "Women",
+        "Girl",
+        "Boy"
+      ],
+      "required": true
+    }
+  }
+}

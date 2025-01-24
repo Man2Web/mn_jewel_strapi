@@ -1,0 +1,39 @@
+{
+  "collectionName": "components_basic_information_basic_informations",
+  "info": {
+    "displayName": "Basic Information"
+  },
+  "options": {},
+  "attributes": {
+    "Height": {
+      "type": "decimal",
+      "required": true
+    },
+    "material": {
+      "type": "enumeration",
+      "enum": [
+        "Gold",
+        "Silver"
+      ],
+      "required": true
+    },
+    "material_type": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::material-type.material-type"
+    },
+    "metal_Purity": {
+      "type": "enumeration",
+      "enum": [
+        "Gold_24K",
+        "Gold_22K",
+        "Gold_18K"
+      ],
+      "required": true
+    },
+    "gross_Weight": {
+      "type": "decimal",
+      "required": true
+    }
+  }
+}
