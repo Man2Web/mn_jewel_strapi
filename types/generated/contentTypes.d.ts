@@ -378,12 +378,17 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
     singularName: 'category';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    homePageImage: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    homePageView: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    link: Schema.Attribute.String & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -391,8 +396,17 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     name: Schema.Attribute.String & Schema.Attribute.Required;
+    navBarPngImage: Schema.Attribute.Media<'images'> &
+      Schema.Attribute.Required;
+    navbarView: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
     products: Schema.Attribute.Relation<'oneToMany', 'api::product.product'>;
     publishedAt: Schema.Attribute.DateTime;
+    sub_category: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::subcategory.subcategory'
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -402,12 +416,13 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
 export interface ApiHomeBannerHomeBanner extends Struct.CollectionTypeSchema {
   collectionName: 'home_banners';
   info: {
+    description: '';
     displayName: 'Home Banner';
     pluralName: 'home-banners';
     singularName: 'home-banner';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     alt_text: Schema.Attribute.String & Schema.Attribute.Required;
@@ -434,17 +449,25 @@ export interface ApiMaterialTypeMaterialType
   collectionName: 'material_types';
   info: {
     description: '';
-    displayName: 'MaterialType';
+    displayName: 'Material Type';
     pluralName: 'material-types';
     singularName: 'material-type';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    homepageBanner: Schema.Attribute.Media<'images'> &
+      Schema.Attribute.Required;
+    isHomePageBanner: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    isMobileNavbar: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -453,6 +476,7 @@ export interface ApiMaterialTypeMaterialType
       Schema.Attribute.Private;
     material_type: Schema.Attribute.String & Schema.Attribute.Required;
     name: Schema.Attribute.String & Schema.Attribute.Required;
+    navabarImage: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     price: Schema.Attribute.Decimal & Schema.Attribute.Required;
     products: Schema.Attribute.Relation<'oneToMany', 'api::product.product'>;
     publishedAt: Schema.Attribute.DateTime;
@@ -472,7 +496,7 @@ export interface ApiProductEnquiryProductEnquiry
     singularName: 'product-enquiry';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     additional_message: Schema.Attribute.Text;
@@ -505,14 +529,9 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     singularName: 'product';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
-    basic_Information: Schema.Attribute.Component<
-      'basic-information.basic-information',
-      false
-    > &
-      Schema.Attribute.Required;
     bestSeller: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<false>;
@@ -533,6 +552,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       > &
       Schema.Attribute.DefaultTo<3>;
     item_Gross_Weight: Schema.Attribute.Decimal & Schema.Attribute.Required;
+    item_Height: Schema.Attribute.Decimal & Schema.Attribute.Required;
     item_Net_Weight: Schema.Attribute.Decimal & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -550,7 +570,6 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       Schema.Attribute.Required;
     metal_Color: Schema.Attribute.Enumeration<['Yellow', 'White', 'Rose']> &
       Schema.Attribute.Required;
-    other_Stone_Price: Schema.Attribute.Decimal;
     product_Description: Schema.Attribute.Text & Schema.Attribute.Required;
     product_Images: Schema.Attribute.Media<'images', true> &
       Schema.Attribute.Required;
@@ -570,10 +589,18 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
         },
         number
       >;
+    sub_category: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::subcategory.subcategory'
+    >;
     tag: Schema.Attribute.Relation<'manyToOne', 'api::tag.tag'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    user_cart: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::user-cart.user-cart'
+    >;
     value_Addition: Schema.Attribute.Decimal & Schema.Attribute.Required;
   };
 }
@@ -582,12 +609,12 @@ export interface ApiSubcategorySubcategory extends Struct.CollectionTypeSchema {
   collectionName: 'subcategories';
   info: {
     description: '';
-    displayName: 'Subcategory';
+    displayName: 'Sub Category';
     pluralName: 'subcategories';
     singularName: 'subcategory';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     category: Schema.Attribute.Relation<'oneToOne', 'api::category.category'>;
@@ -601,6 +628,8 @@ export interface ApiSubcategorySubcategory extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     name: Schema.Attribute.String & Schema.Attribute.Required;
+    png_Image: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    products: Schema.Attribute.Relation<'oneToMany', 'api::product.product'>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -617,7 +646,7 @@ export interface ApiTagTag extends Struct.CollectionTypeSchema {
     singularName: 'tag';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
@@ -632,6 +661,39 @@ export interface ApiTagTag extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+  };
+}
+
+export interface ApiUserCartUserCart extends Struct.CollectionTypeSchema {
+  collectionName: 'user_carts';
+  info: {
+    description: '';
+    displayName: 'User Cart';
+    pluralName: 'user-carts';
+    singularName: 'user-cart';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-cart.user-cart'
+    > &
+      Schema.Attribute.Private;
+    products: Schema.Attribute.Relation<'oneToMany', 'api::product.product'>;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
   };
 }
 
@@ -1090,7 +1152,6 @@ export interface PluginUsersPermissionsUser
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
@@ -1125,6 +1186,10 @@ export interface PluginUsersPermissionsUser
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    user_cart: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::user-cart.user-cart'
+    >;
     username: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique &
@@ -1151,6 +1216,7 @@ declare module '@strapi/strapi' {
       'api::product.product': ApiProductProduct;
       'api::subcategory.subcategory': ApiSubcategorySubcategory;
       'api::tag.tag': ApiTagTag;
+      'api::user-cart.user-cart': ApiUserCartUserCart;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

@@ -4,11 +4,11 @@
   "info": {
     "singularName": "material-type",
     "pluralName": "material-types",
-    "displayName": "MaterialType",
+    "displayName": "Material Type",
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -28,6 +28,32 @@
     },
     "name": {
       "type": "string",
+      "required": true
+    },
+    "homepageBanner": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "isHomePageBanner": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "isMobileNavbar": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "navabarImage": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false,
       "required": true
     }
   }

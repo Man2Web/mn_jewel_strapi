@@ -8,7 +8,7 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -60,10 +60,6 @@
       "type": "decimal",
       "required": true
     },
-    "other_Stone_Price": {
-      "type": "decimal",
-      "required": false
-    },
     "gst": {
       "type": "integer",
       "max": 3,
@@ -104,12 +100,6 @@
       "default": false,
       "required": true
     },
-    "basic_Information": {
-      "type": "component",
-      "repeatable": false,
-      "component": "basic-information.basic-information",
-      "required": true
-    },
     "stone_information": {
       "type": "component",
       "repeatable": true,
@@ -135,6 +125,22 @@
         "Boy"
       ],
       "required": true
+    },
+    "user_cart": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::user-cart.user-cart",
+      "inversedBy": "products"
+    },
+    "item_Height": {
+      "type": "decimal",
+      "required": true
+    },
+    "sub_category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::subcategory.subcategory",
+      "inversedBy": "products"
     }
   }
 }

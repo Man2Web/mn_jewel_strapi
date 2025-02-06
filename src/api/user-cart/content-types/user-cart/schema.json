@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_carts",
+  "info": {
+    "singularName": "user-cart",
+    "pluralName": "user-carts",
+    "displayName": "User Cart",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "products": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::product.product",
+      "mappedBy": "user_cart"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "user_cart"
+    }
+  }
+}

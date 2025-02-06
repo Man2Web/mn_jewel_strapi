@@ -4,10 +4,11 @@
   "info": {
     "singularName": "home-banner",
     "pluralName": "home-banners",
-    "displayName": "Home Banner"
+    "displayName": "Home Banner",
+    "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -16,12 +17,12 @@
       "required": true
     },
     "cover_img": {
-      "allowedTypes": [
-        "images"
-      ],
       "type": "media",
       "multiple": false,
-      "required": true
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
     },
     "alt_text": {
       "type": "string",

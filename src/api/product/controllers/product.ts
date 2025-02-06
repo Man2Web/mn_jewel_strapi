@@ -12,7 +12,9 @@ const calculatePrice = (product) => {
   const otherStonePrice = product.stone_information.reduce((total, item) => {
     return total + item.stone_price;
   }, 0);
-  const gstPrice = (product.gst / 100) * (itemBasePrice + valueAdditionPrice);
+  const gstPrice =
+    (product.gst / 100) *
+    (itemBasePrice + valueAdditionPrice + otherStonePrice);
   const totalPrice =
     itemBasePrice + valueAdditionPrice + otherStonePrice + gstPrice;
   return totalPrice;
@@ -30,10 +32,10 @@ export default factories.createCoreController(
 
       // Fetch products with related material_type data populated
       let { data, meta } = await super.find(
-        { ...ctx, query: queryWithoutSort }, // Updated query without `sort`
+        { ...ctx, query: queryWithoutSort },
         {
           populate: {
-            material_type: true, // Assuming 'material_type' is the relationship field in the Product model
+            material_type: true, // Ensure the material_type relationship is populated
           },
         }
       );
@@ -50,17 +52,17 @@ export default factories.createCoreController(
         filteredProducts = filteredProducts.filter((product) => {
           const price = product.calculatedPrice;
           return (
-            (minPrice ? price >= parseFloat(minPrice as string) : true) &&
-            (maxPrice ? price <= parseFloat(maxPrice as string) : true)
+            (minPrice ? price >= parseFloat(minPrice.toString()) : true) &&
+            (maxPrice ? price <= parseFloat(maxPrice.toString()) : true)
           );
         });
       }
 
-      // Custom sorting logic
+      // Custom sorting logic on the filtered products
       if (sort && typeof sort === "string") {
         const [field, order] = sort.split(":");
 
-        // Check if sorting is requested for "calculatedPrice"
+        // If sorting by calculatedPrice, use custom logic
         if (
           field === "calculatedPrice" &&
           (order === "asc" || order === "desc")
@@ -68,27 +70,23 @@ export default factories.createCoreController(
           filteredProducts.sort((a, b) => {
             const priceA = a.calculatedPrice;
             const priceB = b.calculatedPrice;
-
-            // Ascending: Smallest to Largest, Descending: Largest to Smallest
             return order === "desc" ? priceB - priceA : priceA - priceB;
           });
         } else {
-          // Default Strapi sorting
-          const sortedProducts = await super.find(ctx, {
-            sort: { [field]: order },
+          // Generic sort on the filtered list based on the field
+          filteredProducts.sort((a, b) => {
+            // Get the values to compare. Adjust this if nested properties need to be sorted.
+            const valueA = a[field];
+            const valueB = b[field];
+
+            // Ensure a basic comparison works even if the values are booleans or numbers
+            if (order === "desc") {
+              return valueA < valueB ? 1 : valueA > valueB ? -1 : 0;
+            } else {
+              return valueA > valueB ? 1 : valueA < valueB ? -1 : 0;
+            }
           });
-          filteredProducts = sortedProducts.data.map((product) => ({
-            ...product,
-            calculatedPrice: calculatePrice(product),
-          }));
         }
-      } else {
-        // Default Strapi sorting
-        const sortedProducts = await super.find(ctx);
-        filteredProducts = sortedProducts.data.map((product) => ({
-          ...product,
-          calculatedPrice: calculatePrice(product),
-        }));
       }
 
       // Return the filtered and sorted products
