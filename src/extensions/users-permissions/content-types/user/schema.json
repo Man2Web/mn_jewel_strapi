@@ -65,11 +65,15 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "user_cart": {
+    "userCart": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::user-cart.user-cart",
-      "mappedBy": "user"
+      "relation": "oneToMany",
+      "target": "api::product.product"
+    },
+    "favourites": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::product.product"
     }
   }
 }

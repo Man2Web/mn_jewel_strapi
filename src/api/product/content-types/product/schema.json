@@ -126,12 +126,6 @@
       ],
       "required": true
     },
-    "user_cart": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::user-cart.user-cart",
-      "inversedBy": "products"
-    },
     "item_Height": {
       "type": "decimal",
       "required": true
