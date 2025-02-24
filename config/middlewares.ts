@@ -11,7 +11,8 @@ export default [
             "'self'",
             "data:",
             "blob:",
-            "https://mn-product-bucket.s3.ap-south-1.amazonaws.com",
+            "https://d1uukejij9whar.cloudfront.net/"
+,
           ],
           "media-src": ["'self'", "data:", "blob:"],
           upgradeInsecureRequests: null,
@@ -40,3 +41,15 @@ export default [
 //   'strapi::favicon',
 //   'strapi::public',
 // ];
+
+
+
+
+
+
+
+
+
+
+
+

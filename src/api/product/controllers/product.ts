@@ -5,13 +5,25 @@
 import { factories } from "@strapi/strapi";
 
 // Calculate dynamic prices for each product
+
 const calculatePrice = (product) => {
-  const materialType = product.material_type; // Get material_type from populated data
-  const itemBasePrice = product.item_Net_Weight * materialType.price;
+  // Check if material_type is available and has a valid price
+  const materialTypePrice = product.material_type?.price;
+  if (materialTypePrice == null) {
+    // Handle the missing material_type or price appropriately.
+    // You could return 0, throw an error, or use a default value.
+    return 0;
+  }
+
+  const itemBasePrice = product.item_Net_Weight * materialTypePrice;
   const valueAdditionPrice = (product.value_Addition / 100) * itemBasePrice;
-  const otherStonePrice = product.stone_information.reduce((total, item) => {
-    return total + item.stone_price;
-  }, 0);
+  // Use optional chaining for stone_information, and default to 0 if not available
+  const otherStonePrice = Array.isArray(product.stone_information)
+    ? product.stone_information.reduce(
+        (total, item) => total + item.stone_price,
+        0
+      )
+    : 0;
   const gstPrice =
     (product.gst / 100) *
     (itemBasePrice + valueAdditionPrice + otherStonePrice);

@@ -1,0 +1,35 @@
+{
+  "collectionName": "components_user_address_user_addresses",
+  "info": {
+    "displayName": "User Address"
+  },
+  "options": {},
+  "attributes": {
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "phoneNumber": {
+      "type": "biginteger",
+      "required": true,
+      "min": "10",
+      "max": "10"
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "address": {
+      "type": "text",
+      "required": true
+    },
+    "city": {
+      "type": "string",
+      "required": true
+    },
+    "pincode": {
+      "type": "biginteger",
+      "required": true
+    }
+  }
+}
