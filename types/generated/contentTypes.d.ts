@@ -509,7 +509,7 @@ export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
       Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     totalPrice: Schema.Attribute.Decimal & Schema.Attribute.Required;
-    transactionId: Schema.Attribute.Text &
+    transactionId: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
     updatedAt: Schema.Attribute.DateTime;
