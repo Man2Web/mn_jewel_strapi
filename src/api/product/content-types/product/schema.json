@@ -135,6 +135,12 @@
       "relation": "manyToOne",
       "target": "api::subcategory.subcategory",
       "inversedBy": "products"
+    },
+    "coupon": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::coupon.coupon",
+      "inversedBy": "products"
     }
   }
 }

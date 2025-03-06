@@ -1,0 +1,69 @@
+{
+  "kind": "collectionType",
+  "collectionName": "coupons",
+  "info": {
+    "singularName": "coupon",
+    "pluralName": "coupons",
+    "displayName": "Coupon",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "couponName": {
+      "type": "string",
+      "required": true
+    },
+    "isActive": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "startDate": {
+      "type": "datetime",
+      "required": true
+    },
+    "endDate": {
+      "type": "datetime",
+      "required": true
+    },
+    "couponType": {
+      "type": "enumeration",
+      "enum": [
+        "Flat Discount",
+        "Percentage Discount"
+      ],
+      "required": true
+    },
+    "products": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::product.product",
+      "mappedBy": "coupon"
+    },
+    "couponRate": {
+      "type": "integer",
+      "required": true
+    },
+    "couponLimit": {
+      "type": "biginteger",
+      "required": false
+    },
+    "couponDescription": {
+      "type": "text",
+      "required": true
+    },
+    "minCartValue": {
+      "type": "biginteger",
+      "required": true
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::category.category",
+      "inversedBy": "coupons"
+    }
+  }
+}

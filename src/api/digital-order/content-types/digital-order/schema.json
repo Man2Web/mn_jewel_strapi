@@ -1,0 +1,52 @@
+{
+  "kind": "collectionType",
+  "collectionName": "digital_orders",
+  "info": {
+    "singularName": "digital-order",
+    "pluralName": "digital-orders",
+    "displayName": "Digital Order",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "digital_orders"
+    },
+    "material_type": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::material-type.material-type"
+    },
+    "orderPrice": {
+      "type": "decimal",
+      "required": true
+    },
+    "grams": {
+      "type": "decimal",
+      "required": true
+    },
+    "paymentStatus": {
+      "type": "enumeration",
+      "enum": [
+        "Success",
+        "Failed",
+        "Pending"
+      ],
+      "required": true
+    },
+    "transactionType": {
+      "type": "enumeration",
+      "enum": [
+        "Credit",
+        "Debit"
+      ],
+      "required": true
+    }
+  }
+}

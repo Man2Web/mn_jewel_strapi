@@ -43,6 +43,15 @@
     "orderStatus": {
       "type": "boolean",
       "required": true
+    },
+    "coupon": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::coupon.coupon"
+    },
+    "discountAmount": {
+      "type": "decimal",
+      "required": true
     }
   }
 }
