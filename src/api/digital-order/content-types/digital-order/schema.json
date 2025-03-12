@@ -25,7 +25,8 @@
     },
     "orderPrice": {
       "type": "decimal",
-      "required": true
+      "required": true,
+      "min": 250
     },
     "grams": {
       "type": "decimal",
@@ -46,6 +47,15 @@
         "Credit",
         "Debit"
       ],
+      "required": true
+    },
+    "transactionId": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "goldPrice": {
+      "type": "decimal",
       "required": true
     }
   }

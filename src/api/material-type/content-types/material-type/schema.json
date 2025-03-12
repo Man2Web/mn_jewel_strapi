@@ -49,6 +49,18 @@
       "required": true
     },
     "navabarImage": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "digitalOrder": {
+      "type": "boolean",
+      "required": true
+    },
+    "digitalIcon": {
       "allowedTypes": [
         "images"
       ],

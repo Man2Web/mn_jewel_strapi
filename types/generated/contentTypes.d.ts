@@ -474,6 +474,7 @@ export interface ApiDigitalOrderDigitalOrder
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    goldPrice: Schema.Attribute.Decimal & Schema.Attribute.Required;
     grams: Schema.Attribute.Decimal & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -485,12 +486,22 @@ export interface ApiDigitalOrderDigitalOrder
       'oneToOne',
       'api::material-type.material-type'
     >;
-    orderPrice: Schema.Attribute.Decimal & Schema.Attribute.Required;
+    orderPrice: Schema.Attribute.Decimal &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 250;
+        },
+        number
+      >;
     paymentStatus: Schema.Attribute.Enumeration<
       ['Success', 'Failed', 'Pending']
     > &
       Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
+    transactionId: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
     transactionType: Schema.Attribute.Enumeration<['Credit', 'Debit']> &
       Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
@@ -550,6 +561,8 @@ export interface ApiMaterialTypeMaterialType
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    digitalIcon: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    digitalOrder: Schema.Attribute.Boolean & Schema.Attribute.Required;
     homepageBanner: Schema.Attribute.Media<'images'> &
       Schema.Attribute.Required;
     isHomePageBanner: Schema.Attribute.Boolean &
@@ -1282,18 +1295,12 @@ export interface PluginUsersPermissionsUser
       'manyToOne',
       'plugin::users-permissions.role'
     >;
-    totalGoldGrams: Schema.Attribute.Decimal &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<0>;
-    totalGoldRedeemed: Schema.Attribute.Decimal &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<0>;
-    totalSilverGrams: Schema.Attribute.Decimal &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<0>;
-    totalSilverRedeemed: Schema.Attribute.Decimal &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<0>;
+    tOtp: Schema.Attribute.String &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 6;
+        minLength: 6;
+      }>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

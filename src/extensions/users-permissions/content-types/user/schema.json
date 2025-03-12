@@ -81,31 +81,17 @@
       "target": "api::order.order",
       "mappedBy": "user"
     },
-    "totalGoldGrams": {
-      "type": "decimal",
-      "required": true,
-      "default": 0
-    },
-    "totalGoldRedeemed": {
-      "type": "decimal",
-      "required": true,
-      "default": 0
-    },
-    "totalSilverGrams": {
-      "type": "decimal",
-      "required": true,
-      "default": 0
-    },
-    "totalSilverRedeemed": {
-      "type": "decimal",
-      "required": true,
-      "default": 0
-    },
     "digital_orders": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::digital-order.digital-order",
       "mappedBy": "user"
+    },
+    "tOtp": {
+      "type": "string",
+      "maxLength": 6,
+      "minLength": 6,
+      "unique": true
     }
   }
 }
