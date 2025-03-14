@@ -1,0 +1,44 @@
+{
+  "kind": "collectionType",
+  "collectionName": "scheme_transactions",
+  "info": {
+    "singularName": "scheme-transaction",
+    "pluralName": "scheme-transactions",
+    "displayName": "Scheme Transactions",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "scheme_transactions"
+    },
+    "amountPaid": {
+      "type": "biginteger",
+      "required": true
+    },
+    "scheme": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::scheme.scheme"
+    },
+    "paymentStatus": {
+      "type": "enumeration",
+      "enum": [
+        "Success",
+        "Failed",
+        "Pending"
+      ]
+    },
+    "transactionId": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    }
+  }
+}

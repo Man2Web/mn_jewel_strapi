@@ -1,0 +1,73 @@
+{
+  "kind": "collectionType",
+  "collectionName": "schemes",
+  "info": {
+    "singularName": "scheme",
+    "pluralName": "schemes",
+    "displayName": "Schemes",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "planDescription": {
+      "type": "text",
+      "required": true
+    },
+    "planDuration": {
+      "type": "integer",
+      "required": true,
+      "min": 1
+    },
+    "minAmount": {
+      "type": "biginteger",
+      "required": true,
+      "min": "250",
+      "max": "100000"
+    },
+    "vatChargeable": {
+      "type": "boolean",
+      "required": true
+    },
+    "redemptionDescription": {
+      "type": "text",
+      "required": true
+    },
+    "termsAndConditions": {
+      "type": "text",
+      "required": true
+    },
+    "gstChargeable": {
+      "type": "boolean",
+      "required": true
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "bannerImage": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true
+    },
+    "users": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::user-scheme.user-scheme",
+      "mappedBy": "scheme"
+    }
+  }
+}

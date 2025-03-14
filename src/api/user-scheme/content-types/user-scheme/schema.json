@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_schemes",
+  "info": {
+    "singularName": "user-scheme",
+    "pluralName": "user-schemes",
+    "displayName": "User Schemes",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "schemeStatus": {
+      "type": "enumeration",
+      "enum": [
+        "In-Progress",
+        "Completed"
+      ],
+      "required": true
+    },
+    "paymentsLeft": {
+      "type": "integer",
+      "required": true
+    },
+    "amountPaid": {
+      "type": "biginteger",
+      "required": true
+    },
+    "planCompleted": {
+      "type": "boolean",
+      "required": true
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "user_schemes"
+    },
+    "scheme": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::scheme.scheme",
+      "inversedBy": "users"
+    }
+  }
+}

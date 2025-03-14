@@ -744,6 +744,104 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiSchemeTransactionSchemeTransaction
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'scheme_transactions';
+  info: {
+    description: '';
+    displayName: 'Scheme Transactions';
+    pluralName: 'scheme-transactions';
+    singularName: 'scheme-transaction';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    amountPaid: Schema.Attribute.BigInteger & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::scheme-transaction.scheme-transaction'
+    > &
+      Schema.Attribute.Private;
+    paymentStatus: Schema.Attribute.Enumeration<
+      ['Success', 'Failed', 'Pending']
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    scheme: Schema.Attribute.Relation<'oneToOne', 'api::scheme.scheme'>;
+    transactionId: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
+export interface ApiSchemeScheme extends Struct.CollectionTypeSchema {
+  collectionName: 'schemes';
+  info: {
+    description: '';
+    displayName: 'Schemes';
+    pluralName: 'schemes';
+    singularName: 'scheme';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    bannerImage: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    gstChargeable: Schema.Attribute.Boolean & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::scheme.scheme'
+    > &
+      Schema.Attribute.Private;
+    logo: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    minAmount: Schema.Attribute.BigInteger &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          max: '100000';
+          min: '250';
+        },
+        string
+      >;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    planDescription: Schema.Attribute.Text & Schema.Attribute.Required;
+    planDuration: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
+    publishedAt: Schema.Attribute.DateTime;
+    redemptionDescription: Schema.Attribute.Text & Schema.Attribute.Required;
+    termsAndConditions: Schema.Attribute.Text & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    users: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::user-scheme.user-scheme'
+    >;
+    vatChargeable: Schema.Attribute.Boolean & Schema.Attribute.Required;
+  };
+}
+
 export interface ApiSubcategorySubcategory extends Struct.CollectionTypeSchema {
   collectionName: 'subcategories';
   info: {
@@ -800,6 +898,44 @@ export interface ApiTagTag extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+  };
+}
+
+export interface ApiUserSchemeUserScheme extends Struct.CollectionTypeSchema {
+  collectionName: 'user_schemes';
+  info: {
+    description: '';
+    displayName: 'User Schemes';
+    pluralName: 'user-schemes';
+    singularName: 'user-scheme';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    amountPaid: Schema.Attribute.BigInteger & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-scheme.user-scheme'
+    > &
+      Schema.Attribute.Private;
+    paymentsLeft: Schema.Attribute.Integer & Schema.Attribute.Required;
+    planCompleted: Schema.Attribute.Boolean & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    scheme: Schema.Attribute.Relation<'oneToOne', 'api::scheme.scheme'>;
+    schemeStatus: Schema.Attribute.Enumeration<['In-Progress', 'Completed']> &
+      Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
   };
 }
 
@@ -1295,6 +1431,10 @@ export interface PluginUsersPermissionsUser
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    scheme_transactions: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::scheme-transaction.scheme-transaction'
+    >;
     tOtp: Schema.Attribute.String &
       Schema.Attribute.Unique &
       Schema.Attribute.SetMinMaxLength<{
@@ -1304,6 +1444,10 @@ export interface PluginUsersPermissionsUser
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    user_schemes: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-scheme.user-scheme'
+    >;
     userCart: Schema.Attribute.Relation<'oneToMany', 'api::product.product'>;
     username: Schema.Attribute.String &
       Schema.Attribute.Required &
@@ -1332,8 +1476,11 @@ declare module '@strapi/strapi' {
       'api::order.order': ApiOrderOrder;
       'api::product-enquiry.product-enquiry': ApiProductEnquiryProductEnquiry;
       'api::product.product': ApiProductProduct;
+      'api::scheme-transaction.scheme-transaction': ApiSchemeTransactionSchemeTransaction;
+      'api::scheme.scheme': ApiSchemeScheme;
       'api::subcategory.subcategory': ApiSubcategorySubcategory;
       'api::tag.tag': ApiTagTag;
+      'api::user-scheme.user-scheme': ApiUserSchemeUserScheme;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

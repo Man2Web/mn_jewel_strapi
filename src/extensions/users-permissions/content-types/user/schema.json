@@ -92,6 +92,18 @@
       "maxLength": 6,
       "minLength": 6,
       "unique": true
+    },
+    "scheme_transactions": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::scheme-transaction.scheme-transaction",
+      "mappedBy": "user"
+    },
+    "user_schemes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::user-scheme.user-scheme",
+      "mappedBy": "user"
     }
   }
 }
